@@ -1,0 +1,39 @@
+
+@import './variables';
+@import './functions';
+@import './main_layout';
+@import './about';
+
+
+
+
+
+
+a:link {
+    color: grey;
+    text-decoration: none !important;
+  }
+  
+  /* visited link */
+  a:visited {
+    color: grey;
+  }
+  
+  /* mouse over link */
+  a:hover {
+    color: hotpink;
+  }
+  
+  /* selected link */
+  a:active {
+    color: blue;
+  }
+
+  .col
+  {
+      text-align: center;
+      background-color: aqua;
+      border-color: black !important;
+      border-style: solid;
+      border-width: 1px;
+  }
