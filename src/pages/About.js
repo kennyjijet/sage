@@ -20,7 +20,7 @@ class About extends React.Component {
 
     componentWillMount() {
         //this.props.backendData();
-      }
+    }
 
     componentDidMount() {
         this.props.backendData();
@@ -30,24 +30,26 @@ class About extends React.Component {
     }
 
     //shouldComponentUpdate(nextProps, nextState) {
-        //return this.state.books !== nextState.books;
+    //return this.state.books !== nextState.books;
     //}
-    
-    componentWillUpdate(nextProps, nextState){
+
+    componentWillUpdate(nextProps, nextState) {
 
         //this.setState({books: nextProps.books});
-    } 
+    }
 
     componentWillReceiveProps(nextProps) {
         //for redux
-        
-        //console.log(this.props.posts);
-       if(nextProps.posts)
-       {    //console.log(nextProps.posts);
+
+        console.log(this.props.posts);
+        if (nextProps.posts) {    //console.log(nextProps.posts);
             //this.setState({posts: nextProps.posts});
             //this.props.posts = nextProps.posts;
             //console.log(this.props.posts);
+            //this.props
+            this.props.posts.splice(0, this.props.posts.length)
             this.props.posts.unshift(nextProps.posts);
+            console.log(this.props.posts);
 
         }
     }
@@ -75,7 +77,7 @@ class About extends React.Component {
 
 About.propTypes = {
     fetchPosts: PropTypes.func.isRequired,
-  };
+};
 
 const mapStateToProps = state => ({
     posts: state.backendDatas.items
