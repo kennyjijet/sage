@@ -51,6 +51,7 @@ class BodyMainLayout extends React.PureComponent {
     this.setState({
       cards: []
     })
+
     this.setState({
       clickedUrl: urlImg
     })
@@ -68,6 +69,9 @@ class BodyMainLayout extends React.PureComponent {
   }
 
   handleClose() {
+    this.setState({
+      cards: []
+    })
     this.setState({
       showModal: false
     })
