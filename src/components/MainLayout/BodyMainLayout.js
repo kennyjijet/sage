@@ -21,10 +21,6 @@ class BodyMainLayout extends React.PureComponent {
       showModal: false,
       clickedUrl: ''
     };
-
-
-
-
     this.renderCompleted = false;
     this.showModalFunction = this.showModalFunction.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -45,13 +41,22 @@ class BodyMainLayout extends React.PureComponent {
         itemsPhotosLocal: nextProps.itemsPhotos
       });
     }
+    this.setState({
+      cards: []
+    });
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    console.log(nextProps);
+    console.log(nextState);
+  }
+
+  componentDidUpdate(previousProps, previousState) {
+    console.log(this.state.itemsLocal);
+    console.log(this.state.itemsPhotosLocal);
   }
 
   showModalFunction(isDisable, urlImg) {
-    this.setState({
-      cards: []
-    })
-
     this.setState({
       clickedUrl: urlImg
     })
@@ -59,38 +64,35 @@ class BodyMainLayout extends React.PureComponent {
     if (!isDisable) {
       this.state.showModal ?
         this.setState({
-          showModal: false
+          showModal: false,
         })
         :
         this.setState({
-          showModal: true
+          showModal: true,
         });
     }
   }
 
   handleClose() {
+
     this.setState({
-      cards: []
-    })
-    this.setState({
-      showModal: false
+      showModal: false,
     })
   }
-
-
   render() {
-
-    this.state.itemsLocal.map((value, index) => {
+    this.state.itemsLocal.forEach((value, index) => {
       if (this.state.itemsPhotosLocal.length > 0) {
-        this.state.cards.push(<MyCard
-          showModalFunction={this.showModalFunction}
-          id={value.id}
-          imageProfileUrl={this.state.itemsPhotosLocal[index].download_url}
-          name={value.name}
-          email={value.email}
-          street={value.address.street}
-          zipcode={value.address.zipcode}
-        />);
+        if (this.state.cards.length < 10) {
+          this.state.cards.push(<MyCard
+            showModalFunction={this.showModalFunction}
+            id={value.id}
+            imageProfileUrl={this.state.itemsPhotosLocal[index].download_url}
+            name={value.name}
+            email={value.email}
+            street={value.address.street}
+            zipcode={value.address.zipcode}
+          />);
+        }
       }
     });
     return (
@@ -112,7 +114,6 @@ class BodyMainLayout extends React.PureComponent {
                   textAlign: "center"
                 }} src={this.state.clickedUrl} roundedCircle />
               </div>
-
             </Col>
           </Modal.Body>
         </Modal>
