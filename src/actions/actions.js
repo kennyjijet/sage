@@ -1,7 +1,10 @@
-import { FETCH_DATA_FROM_BACKEND, POST_DATA } from './types';
+import {
+  FETCH_DATA_FROM_BACKEND,
+  FETCH_DATA_FROM_BACKEND_PHOTO
+} from "./types";
 
 export const backendData = () => dispatch => {
-  fetch('https://jsonplaceholder.typicode.com/posts')
+  fetch("https://jsonplaceholder.typicode.com/users")
     .then(res => res.json())
     .then(posts =>
       dispatch({
@@ -11,20 +14,13 @@ export const backendData = () => dispatch => {
     );
 };
 
-
-export const createPost = postData => dispatch => {
-  fetch('https://jsonplaceholder.typicode.com/posts', {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json'
-    },
-    body: JSON.stringify(postData)
-  })
+export const backendDataPhoto = () => dispatch => {
+  fetch("https://picsum.photos/v2/list")
     .then(res => res.json())
-    .then(post =>
+    .then(posts =>
       dispatch({
-        type: POST_DATA,
-        payload: post
+        type: FETCH_DATA_FROM_BACKEND_PHOTO,
+        payload: posts
       })
     );
 };

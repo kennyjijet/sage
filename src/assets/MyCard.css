@@ -1,0 +1,17 @@
+.myCard {
+  cursor: pointer;
+  display: inline-block;
+  width: 250px;
+  margin: 15px;
+}
+
+.disable {
+  opacity: 0.3;
+}
+
+.profile {
+  border-radius: 50px;
+  width: 100px;
+  height: 100px;
+
+}

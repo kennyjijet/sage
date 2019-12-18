@@ -1,52 +1,132 @@
-import React from 'react';
-import { Table } from 'react-bootstrap';
+import React from "react";
+import { Table, Modal, Col, Image } from "react-bootstrap";
+import { backendData, backendDataPhoto } from "../../actions/actions";
+import { connect } from "react-redux";
+import MyCard from "./MyCard";
+import '../../assets/BodyMain.css'
+import MyModal from "./MyModal";
 
-class BodyMainLayout extends React.Component {
-   
-    componentWillMount() {
+class BodyMainLayout extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    if (process.env.NODE_ENV !== "production") {
+      console.log("this is not production");
+      console.log("TEST");
     }
+    this.state = {
+      itemsLocal: [],
+      itemsPhotosLocal: [],
+      test: "test",
+      cards: [],
+      showModal: false,
+      clickedUrl: ''
+    };
 
-    componentDidMount() {
-    }
 
-    componentWillReceiveProps(nextProps) {
-    }
 
-    render() {
-        return (
-            <>
-            <Table striped bordered hover variant="dark">
-            <thead>
-                <tr>
-                <th>#</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Username</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                <td>1</td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                </tr>
-                <tr>
-                <td>2</td>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-                </tr>
-                <tr>
-                <td>3</td>
-                <td colSpan="2">Larry the Bird</td>
-                <td>@twitter</td>
-                </tr>
-            </tbody>
-            </Table>
-            </>
-        )
+
+    this.renderCompleted = false;
+    this.showModalFunction = this.showModalFunction.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+  }
+  componentDidMount() {
+    this.props.backendData();
+    this.props.backendDataPhoto();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.items.length > 0) {
+      this.setState({
+        itemsLocal: nextProps.items
+      });
     }
+    if (nextProps.itemsPhotos.length > 0) {
+      this.setState({
+        itemsPhotosLocal: nextProps.itemsPhotos
+      });
+    }
+  }
+
+  showModalFunction(isDisable, urlImg) {
+    this.setState({
+      cards: []
+    })
+    this.setState({
+      clickedUrl: urlImg
+    })
+
+    if (!isDisable) {
+      this.state.showModal ?
+        this.setState({
+          showModal: false
+        })
+        :
+        this.setState({
+          showModal: true
+        });
+    }
+  }
+
+  handleClose() {
+    this.setState({
+      showModal: false
+    })
+  }
+
+
+  render() {
+
+    this.state.itemsLocal.map((value, index) => {
+      if (this.state.itemsPhotosLocal.length > 0) {
+        this.state.cards.push(<MyCard
+          showModalFunction={this.showModalFunction}
+          id={value.id}
+          imageProfileUrl={this.state.itemsPhotosLocal[index].download_url}
+          name={value.name}
+          email={value.email}
+          street={value.address.street}
+          zipcode={value.address.zipcode}
+        />);
+      }
+    });
+    return (
+      <>
+        <div class="bodyMain">
+          {this.state.cards}
+        </div>
+
+        <Modal show={this.state.showModal} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+          </Modal.Header>
+          <Modal.Body>
+            <Col>
+              <div style={{
+                textAlign: 'center'
+              }}>
+                <Image style={{
+                  width: "150px", height: "150px", marginTop: "5px",
+                  textAlign: "center"
+                }} src={this.state.clickedUrl} roundedCircle />
+              </div>
+
+            </Col>
+          </Modal.Body>
+        </Modal>
+      </>
+    )
+  }
 }
 
-export default BodyMainLayout
+const mapStateToProps = state => ({
+  items: state.backendDatas.items,
+  itemsPhotos: state.backendDatas.itemsPhotos
+});
+export default connect(mapStateToProps, { backendData, backendDataPhoto })(
+  BodyMainLayout
+);
+
+
+/*
+<MyModal showModal={this.state.showModal} imageProfileUrl={this.state.clickedUrl} />
+{this.state.showModal ? <MyModal imageProfileUrl={this.state.clickedUrl} /> : null}
+*/

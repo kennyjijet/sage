@@ -1,18 +1,26 @@
-import { FETCH_DATA_FROM_BACKEND } from '../actions/types';
+import {
+  FETCH_DATA_FROM_BACKEND,
+  FETCH_DATA_FROM_BACKEND_PHOTO
+} from "../actions/types";
 
 const initialState = {
-    items: []
+  items: [],
+  itemsPhotos: []
 };
 
-export default function (state = initialState, action) {
-    switch (action.type) {
-        case FETCH_DATA_FROM_BACKEND:
-            console.log("Load for me");
-            return {
-                ...state,
-                items: action.payload
-            };
-        default:
-            return state;
-    }
+export default function(state = initialState, action) {
+  switch (action.type) {
+    case FETCH_DATA_FROM_BACKEND:
+      return {
+        ...state,
+        items: action.payload
+      };
+    case FETCH_DATA_FROM_BACKEND_PHOTO:
+      return {
+        ...state,
+        itemsPhotos: action.payload
+      };
+    default:
+      return state;
+  }
 }
