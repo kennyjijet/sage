@@ -41,9 +41,6 @@ class BodyMainLayout extends React.PureComponent {
         itemsPhotosLocal: nextProps.itemsPhotos
       });
     }
-    this.setState({
-      cards: []
-    });
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -55,7 +52,12 @@ class BodyMainLayout extends React.PureComponent {
     console.log(this.state.itemsLocal);
     console.log(this.state.itemsPhotosLocal);
   }
-
+  /*
+    shouldComponentUpdate(nextProps, nextState) {
+      console.log((this.state.cards.length < 10 && this.state.itemsPhotosLocal.length > 0));
+      return (this.state.cards.length < 10 && this.state.itemsPhotosLocal.length > 0);
+    }
+  */
   showModalFunction(isDisable, urlImg) {
     this.setState({
       clickedUrl: urlImg
@@ -81,18 +83,16 @@ class BodyMainLayout extends React.PureComponent {
   }
   render() {
     this.state.itemsLocal.forEach((value, index) => {
-      if (this.state.itemsPhotosLocal.length > 0) {
-        if (this.state.cards.length < 10) {
-          this.state.cards.push(<MyCard
-            showModalFunction={this.showModalFunction}
-            id={value.id}
-            imageProfileUrl={this.state.itemsPhotosLocal[index].download_url}
-            name={value.name}
-            email={value.email}
-            street={value.address.street}
-            zipcode={value.address.zipcode}
-          />);
-        }
+      if (this.state.cards.length < 10 && this.state.itemsPhotosLocal.length > 0) {
+        this.state.cards.push(<MyCard
+          showModalFunction={this.showModalFunction}
+          id={value.id}
+          imageProfileUrl={this.state.itemsPhotosLocal[index].download_url}
+          name={value.name}
+          email={value.email}
+          street={value.address.street}
+          zipcode={value.address.zipcode}
+        />);
       }
     });
     return (
