@@ -25,7 +25,7 @@ class BodyMainLayout extends React.PureComponent {
     this.showModalFunction = this.showModalFunction.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
-  componentDidMount() {
+  async componentDidMount() {
     this.props.backendData();
     this.props.backendDataPhoto();
   }
@@ -82,8 +82,8 @@ class BodyMainLayout extends React.PureComponent {
     })
   }
   render() {
-    this.state.itemsLocal.forEach((value, index) => {
-      if (this.state.cards.length < 10 && this.state.itemsPhotosLocal.length > 0) {
+    if (this.state.cards.length < 10 && this.state.itemsPhotosLocal.length > 0) {
+      this.state.itemsLocal.forEach((value, index) => {
         this.state.cards.push(<MyCard
           showModalFunction={this.showModalFunction}
           id={value.id}
@@ -93,8 +93,9 @@ class BodyMainLayout extends React.PureComponent {
           street={value.address.street}
           zipcode={value.address.zipcode}
         />);
-      }
-    });
+      });
+    }
+
     return (
       <>
         <div class="bodyMain">
