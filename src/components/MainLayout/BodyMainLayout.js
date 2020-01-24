@@ -6,6 +6,23 @@ import MyCard from "./MyCard";
 import '../../assets/BodyMain.css'
 import MyModal from "./MyModal";
 
+
+const BodyMainLayout = (props) => {
+  console.log(props);
+  return (
+    <>
+      {}
+    </>
+  );
+}
+const mapStateToProps = state => ({
+  items: state.backendDatas.items,
+  itemsPhotos: state.backendDatas.itemsPhotos
+});
+export default connect(mapStateToProps, { backendData, backendDataPhoto })(
+  BodyMainLayout
+);
+/*
 class BodyMainLayout extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -57,7 +74,7 @@ class BodyMainLayout extends React.PureComponent {
       console.log((this.state.cards.length < 10 && this.state.itemsPhotosLocal.length > 0));
       return (this.state.cards.length < 10 && this.state.itemsPhotosLocal.length > 0);
     }
-  */
+
   showModalFunction(isDisable, urlImg) {
     this.setState({
       clickedUrl: urlImg
@@ -130,8 +147,7 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, { backendData, backendDataPhoto })(
   BodyMainLayout
 );
-
-
+*/
 /*
 <MyModal showModal={this.state.showModal} imageProfileUrl={this.state.clickedUrl} />
 {this.state.showModal ? <MyModal imageProfileUrl={this.state.clickedUrl} /> : null}

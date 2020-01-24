@@ -7,7 +7,7 @@ import "./App.css";
 import store from "./store";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+/*
 class App extends React.Component {
   constructor(props) {
     super();
@@ -25,4 +25,22 @@ class App extends React.Component {
     );
   }
 }
+*/
+const App = () => {
+  /*
+  const greeting = 'Hello Function Component!';
+  return (<h1>{greeting}</h1>);
+  */
+
+  return (
+    <Provider store={store}>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={MainLayout} />
+        </Switch>
+      </Router>
+    </Provider>
+  );
+}
+
 export default App;
