@@ -24,3 +24,17 @@ export const backendDataPhoto = () => dispatch => {
       })
     );
 };
+
+/*
+
+Promise.all(urls.map(url =>
+  fetch(url)
+    .then(checkStatus)
+    .then(parseJSON)
+    .catch(logError)
+))
+.then(data => {
+  // do something with the data
+})
+
+*/

@@ -2,7 +2,7 @@ import React from "react";
 import BodyMainLayout from "../components/MainLayout/BodyMainLayout";
 
 import "../assets/MainLayout.css";
-
+/*
 class MainLayout extends React.Component {
   constructor(props) {
     super(props);
@@ -19,5 +19,13 @@ class MainLayout extends React.Component {
     );
   }
 }
+*/
+const MainLayout = () => {
+  return (
+    <div className="mainLayout">
+      <BodyMainLayout />
+    </div>
+  );
 
+}
 export default MainLayout;

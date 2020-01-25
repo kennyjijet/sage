@@ -6,6 +6,23 @@ import MyCard from "./MyCard";
 import '../../assets/BodyMain.css'
 import MyModal from "./MyModal";
 
+
+const BodyMainLayout = (props) => {
+  console.log(props);
+  return (
+    <>
+      {}
+    </>
+  );
+}
+const mapStateToProps = state => ({
+  items: state.backendDatas.items,
+  itemsPhotos: state.backendDatas.itemsPhotos
+});
+export default connect(mapStateToProps, { backendData, backendDataPhoto })(
+  BodyMainLayout
+);
+/*
 class BodyMainLayout extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -25,7 +42,7 @@ class BodyMainLayout extends React.PureComponent {
     this.showModalFunction = this.showModalFunction.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
-  componentDidMount() {
+  async componentDidMount() {
     this.props.backendData();
     this.props.backendDataPhoto();
   }
@@ -57,7 +74,7 @@ class BodyMainLayout extends React.PureComponent {
       console.log((this.state.cards.length < 10 && this.state.itemsPhotosLocal.length > 0));
       return (this.state.cards.length < 10 && this.state.itemsPhotosLocal.length > 0);
     }
-  */
+
   showModalFunction(isDisable, urlImg) {
     this.setState({
       clickedUrl: urlImg
@@ -82,8 +99,8 @@ class BodyMainLayout extends React.PureComponent {
     })
   }
   render() {
-    this.state.itemsLocal.forEach((value, index) => {
-      if (this.state.cards.length < 10 && this.state.itemsPhotosLocal.length > 0) {
+    if (this.state.cards.length < 10 && this.state.itemsPhotosLocal.length > 0) {
+      this.state.itemsLocal.forEach((value, index) => {
         this.state.cards.push(<MyCard
           showModalFunction={this.showModalFunction}
           id={value.id}
@@ -93,8 +110,9 @@ class BodyMainLayout extends React.PureComponent {
           street={value.address.street}
           zipcode={value.address.zipcode}
         />);
-      }
-    });
+      });
+    }
+
     return (
       <>
         <div class="bodyMain">
@@ -129,8 +147,7 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, { backendData, backendDataPhoto })(
   BodyMainLayout
 );
-
-
+*/
 /*
 <MyModal showModal={this.state.showModal} imageProfileUrl={this.state.clickedUrl} />
 {this.state.showModal ? <MyModal imageProfileUrl={this.state.clickedUrl} /> : null}
