@@ -7,14 +7,17 @@ import '../../assets/BodyMain.css'
 import MyModal from "./MyModal";
 
 
-const BodyMainLayout = (props) => {
-  console.log(props);
+const BodyMainLayout = (item, items) => {
+  console.log(item);
+  backendData();
+  backendDataPhoto();
   return (
     <>
-      {}
+      {item}
     </>
   );
 }
+
 const mapStateToProps = state => ({
   items: state.backendDatas.items,
   itemsPhotos: state.backendDatas.itemsPhotos
