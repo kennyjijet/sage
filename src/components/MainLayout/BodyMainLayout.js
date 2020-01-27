@@ -6,38 +6,126 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 import MyCard from "./MyCard";
-import '../../assets/BodyMain.css'
+//import '../../assets/BodyMain.css'
 import MyModal from "./MyModal";
 
 
-const BodyMainLayout = ({ items, itemsPhotos }) => {
-  const [data, setData] = useState({ items: [] });
+const BodyMainLayout = () => {
+  const content = useSelector(state => state);
+  const dispatch = useDispatch();
+  const loading = "Loading";
+  let clickedUrl = "";
+  let showModal = false;
 
+  
+  const showModalFunction = (isDisable, urlImg) => {
+    clickedUrl = urlImg;
+    if (!isDisable) {
+        (showModal) ?
+        (showModal = false)
+        :
+        (showModal = true)
+    }
+  };
+
+  const handleClose = () => {
+    showModal = false;
+  }
+  
+
+  //const [data, setData] = useState({ items: [] });
   //backendData();
   //backendDataPhoto();
+  //const {receiveAmount, sendAmount } = props
+  //const prevAmount = usePrevious({receiveAmount, sendAmount});
   useEffect(() => {
-    backendData();
-    backendDataPhoto();
-    setData(items);
-  }, [data]);
-
-
+    dispatch(backendData());
+    dispatch(backendDataPhoto());
+    //setData(items);
+    //console.log(props.items);
+    //console.log(props.items);
+  }, {});
+  //console.log(content.backendDatas.items.length > 0);
+  //console.log(content.backendDatas.itemsPhotos.length > 0);
+  //console.log((content.backendDatas.items.length > 0 && content.backendDatas.itemsPhotos.length > 0));
+  
+  const bodyMain = {
+    textAlign: "center",
+    backgroundColor: "gray"
+  };
+  
   return (
     <>
-      {data.items}
+    <div style={bodyMain}>
+      {
+        (content.backendDatas.items.length > 0 && content.backendDatas.itemsPhotos.length > 0) ? (
+          content.backendDatas.items.map((value, index) => {
+            return (<MyCard
+              key={index}
+              showModalFunction={showModalFunction.bind(this)}
+              id={value.id}
+              imageProfileUrl={content.backendDatas.itemsPhotos[index].download_url}
+              name={value.name}
+              email={value.email}
+              street={value.address.street}
+              zipcode={value.address.zipcode}
+            />)
+    })
+  ) : (
+            <h1>{loading}</h1>
+        )
+      }
+      </div>
+      <Modal show={showModal} onHide={() => handleClose}>
+          <Modal.Header closeButton>
+          </Modal.Header>
+          <Modal.Body>
+            <Col>
+              <div style={{
+                textAlign: 'center'
+              }}>
+                <Image style={{
+                  width: "150px", height: "150px", marginTop: "5px",
+                  textAlign: "center"
+                }} src={clickedUrl} roundedCircle />
+              </div>
+            </Col>
+          </Modal.Body>
+        </Modal>
+    
     </>
   );
 }
+export default BodyMainLayout;
 
+
+
+   /*
+            cards.push(<MyCard
+              showModalFunction={showModalFunction}
+              id={value.id}
+              imageProfileUrl={content.backendDatas.itemsPhotos[index].download_url}
+              name={value.name}
+              email={value.email}
+              street={value.address.street}
+              zipcode={value.address.zipcode}
+            />);
+            */
+
+
+/*
 const mapStateToProps = state => ({
   items: state.backendDatas.items,
   itemsPhotos: state.backendDatas.itemsPhotos
 });
 const mapDispatchToProps = { backendData, backendDataPhoto };
-
+*/
+/*
 export default connect(mapStateToProps, mapDispatchToProps)(
   BodyMainLayout
 );
+*/
+
 
 
 /*
