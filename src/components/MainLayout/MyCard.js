@@ -4,7 +4,6 @@ import "../../assets/MyCard.css";
 class MyCard extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       isDisable: false
     }

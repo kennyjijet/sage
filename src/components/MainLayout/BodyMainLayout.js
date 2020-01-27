@@ -13,25 +13,37 @@ import MyModal from "./MyModal";
 const BodyMainLayout = () => {
   const content = useSelector(state => state);
   const dispatch = useDispatch();
+  const [showModal, setShow] = useState(false);
+  const [clickedUrl, setImgURL] = useState("");
+
   const loading = "Loading";
-  let clickedUrl = "";
-  let showModal = false;
+  //let showModal = false;
 
-  
-  const showModalFunction = (isDisable, urlImg) => {
-    clickedUrl = urlImg;
+  const handleClose = () => setShow(false);
+  const handleShow = (isDisable, urlImg) => {
+    setImgURL(urlImg);
     if (!isDisable) {
-        (showModal) ?
-        (showModal = false)
-        :
-        (showModal = true)
+      setShow(true);
     }
-  };
-
-  const handleClose = () => {
-    showModal = false;
   }
-  
+
+  /*
+    const showModalFunction = (isDisable, urlImg) => {
+      clickedUrl = urlImg;
+      if (!isDisable) {
+        (showModal) ?
+          (showModal = false)
+          :
+          (showModal = true)
+      }
+      alert(showModal);
+    };
+    */
+  /*
+    const handleClose = () => {
+      showModal = false;
+    }
+  */
 
   //const [data, setData] = useState({ items: [] });
   //backendData();
@@ -48,51 +60,52 @@ const BodyMainLayout = () => {
   //console.log(content.backendDatas.items.length > 0);
   //console.log(content.backendDatas.itemsPhotos.length > 0);
   //console.log((content.backendDatas.items.length > 0 && content.backendDatas.itemsPhotos.length > 0));
-  
+
   const bodyMain = {
     textAlign: "center",
     backgroundColor: "gray"
   };
-  
+
   return (
     <>
-    <div style={bodyMain}>
-      {
-        (content.backendDatas.items.length > 0 && content.backendDatas.itemsPhotos.length > 0) ? (
-          content.backendDatas.items.map((value, index) => {
-            return (<MyCard
-              key={index}
-              showModalFunction={showModalFunction.bind(this)}
-              id={value.id}
-              imageProfileUrl={content.backendDatas.itemsPhotos[index].download_url}
-              name={value.name}
-              email={value.email}
-              street={value.address.street}
-              zipcode={value.address.zipcode}
-            />)
-    })
-  ) : (
-            <h1>{loading}</h1>
-        )
-      }
+      <div style={bodyMain}>
+        {
+          (content.backendDatas.items.length > 0 && content.backendDatas.itemsPhotos.length > 0) ? (
+            content.backendDatas.items.map((value, index) => {
+              return (<MyCard
+                key={index}
+                showModalFunction={handleShow}
+                id={value.id}
+                imageProfileUrl={content.backendDatas.itemsPhotos[index].download_url}
+                name={value.name}
+                email={value.email}
+                street={value.address.street}
+                zipcode={value.address.zipcode}
+              />)
+            })
+          ) : (
+              <h1>{loading}</h1>
+            )
+        }
       </div>
-      <Modal show={showModal} onHide={() => handleClose}>
-          <Modal.Header closeButton>
-          </Modal.Header>
-          <Modal.Body>
-            <Col>
-              <div style={{
-                textAlign: 'center'
-              }}>
-                <Image style={{
-                  width: "150px", height: "150px", marginTop: "5px",
-                  textAlign: "center"
-                }} src={clickedUrl} roundedCircle />
-              </div>
-            </Col>
-          </Modal.Body>
-        </Modal>
-    
+
+      <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+        </Modal.Header>
+        <Modal.Body>
+          <Col>
+            <div style={{
+              textAlign: 'center'
+            }}>
+              <Image style={{
+                width: "150px", height: "150px", marginTop: "5px",
+                textAlign: "center"
+              }} src={clickedUrl} roundedCircle />
+            </div>
+          </Col>
+        </Modal.Body>
+      </Modal>
+
     </>
   );
 }
@@ -100,17 +113,17 @@ export default BodyMainLayout;
 
 
 
-   /*
-            cards.push(<MyCard
-              showModalFunction={showModalFunction}
-              id={value.id}
-              imageProfileUrl={content.backendDatas.itemsPhotos[index].download_url}
-              name={value.name}
-              email={value.email}
-              street={value.address.street}
-              zipcode={value.address.zipcode}
-            />);
-            */
+/*
+         cards.push(<MyCard
+           showModalFunction={showModalFunction}
+           id={value.id}
+           imageProfileUrl={content.backendDatas.itemsPhotos[index].download_url}
+           name={value.name}
+           email={value.email}
+           street={value.address.street}
+           zipcode={value.address.zipcode}
+         />);
+         */
 
 
 /*
