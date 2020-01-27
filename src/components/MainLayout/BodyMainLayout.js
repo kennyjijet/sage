@@ -1,19 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Table, Modal, Col, Image } from "react-bootstrap";
 import { backendData, backendDataPhoto } from "../../actions/actions";
 import { connect } from "react-redux";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+
 import MyCard from "./MyCard";
 import '../../assets/BodyMain.css'
 import MyModal from "./MyModal";
 
 
-const BodyMainLayout = (item, items) => {
-  console.log(item);
-  backendData();
-  backendDataPhoto();
+const BodyMainLayout = ({ items, itemsPhotos }) => {
+  const [data, setData] = useState({ items: [] });
+
+  //backendData();
+  //backendDataPhoto();
+  useEffect(() => {
+    backendData();
+    backendDataPhoto();
+    setData(items);
+  }, [data]);
+
+
   return (
     <>
-      {item}
+      {data.items}
     </>
   );
 }
@@ -22,9 +33,13 @@ const mapStateToProps = state => ({
   items: state.backendDatas.items,
   itemsPhotos: state.backendDatas.itemsPhotos
 });
-export default connect(mapStateToProps, { backendData, backendDataPhoto })(
+const mapDispatchToProps = { backendData, backendDataPhoto };
+
+export default connect(mapStateToProps, mapDispatchToProps)(
   BodyMainLayout
 );
+
+
 /*
 class BodyMainLayout extends React.PureComponent {
   constructor(props) {
