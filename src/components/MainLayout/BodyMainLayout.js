@@ -56,7 +56,8 @@ const BodyMainLayout = () => {
     //setData(items);
     //console.log(props.items);
     //console.log(props.items);
-  }, {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   //console.log(content.backendDatas.items.length > 0);
   //console.log(content.backendDatas.itemsPhotos.length > 0);
   //console.log((content.backendDatas.items.length > 0 && content.backendDatas.itemsPhotos.length > 0));
